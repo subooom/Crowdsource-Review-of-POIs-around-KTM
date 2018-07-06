@@ -143,7 +143,7 @@ $(document).ready(function() {
   database = firebase.database();
   (async function(){
     try {
-      $('#destination').html(`<img src="img/placeholder.jpg" alt="A Loading Screen" />`+loadingTemplate);
+      $('#destination').html(loadingTemplate);
 
       const { data } = await axios.get('https://www.thrillophilia.com/places-to-visit-in-kathmandu');
       const html = $(data);
