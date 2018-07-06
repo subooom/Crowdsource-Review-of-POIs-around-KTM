@@ -85,7 +85,7 @@ function generateItem(trips, index){
   setTimeout(function(){
     $('#destination').html(template);
 
-    if(index>=0){
+    if(index>=3){
       $(".card-content").append('<a style="margin-top: 5px" id="exit" class=" waves-effect waves-light"><i class="material-icons right">exit_to_app</i>I am done, take me out</a>');
     }
     $('#index').html(`${index+1} of ${trips.length}`);
@@ -94,7 +94,7 @@ function generateItem(trips, index){
       index++;
       $('#card-item').animate({opacity: 0}, 500);
       setTimeout(function(){
-        $('#destination').html(`<h4 id="index" class="teal-text lighten-1">${index+1} of ${trips.length}</h4>`+`<img src="img/placeholder.jpg" alt="A Loading Screen" />`+loadingTemplate);
+        $('#destination').html(`<h4 id="index" class="teal-text lighten-1">${index+1} of ${trips.length}</h4>`+loadingTemplate);
       }, 520);
 
       generateItem(trips, index);
@@ -112,7 +112,7 @@ function generateItem(trips, index){
         sendData();
         $('#card-item').animate({opacity: 0}, 500);
         setTimeout(function(){
-          $('#destination').html(`<h4 id="index" class="teal-text lighten-1">${index+1} of ${trips.length}</h4>`+`<img src="img/placeholder.jpg" alt="A Loading Screen" />`+loadingTemplate);
+          $('#destination').html(`<h4 id="index" class="teal-text lighten-1">${index+1} of ${trips.length}</h4>`+loadingTemplate);
         }, 520);
         $('.preloader-wrapper').show();
         generateItem(trips, index);
