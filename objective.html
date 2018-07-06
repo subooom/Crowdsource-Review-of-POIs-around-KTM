@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Review of POIs around Kathmadu</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+  </head>
+  <body style=" font-family: 'Montserrat', sans-serif;">
+      <style>
+          body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+          }
+
+          main {
+            flex: 1 0 auto;
+          }
+        </style>
+        <div class="navbar-fixed">
+          <nav class="deep-purple darken-1">
+            <div class="nav-wrapper">
+              <a href="index.html" style="font-size: 1.4rem;left: 20px;" class="left brand-logo">Review of <abbr title="Points of Interests">POIs</abbr> around Kathmadu</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="index.html">Rate</a></li>
+                <li class="active"><a href="objective.html">Objective</a></li>
+                <li><a href="about.html">Who am I?</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <main class="container">
+          <div class="row">
+            <div class="col s12 m12">
+              <h2 class="header">Project Objective</h2>
+              <div class="card hoverable">
+                <div class="card-content">
+                  <p>Kathmandu is currenly regarded as one of the most polluted city globally. Air pollution, noise pollution, soil pollution etc. are just a few things that down this city's status; disregarding the actual beauty of the valley. So this survey is conducted for the purpose of raising awareness to the local authority about the impact of pollution on the normal Nepali living in the city and partially for foreign and/or domestic tourists to get a better idea about the points of interests around Kathmandu; as I plan to vizualize the data I collect in some interactive way on the near future. I obviously need a lot of data for that to happen, so I request you to share this site with buddies who are living/have lived in Kathmandu. I think that this will work in the betterment of the community as a whole.</p>
+                  <p>Drop your suggestions down below!</p>
+                  <div class="input-field">
+                    <input type="email" name="email" id="email">
+                    <label for="email">Your Email</label>
+                  </div>
+                  <div class="input-field">
+                    <textarea name="email" id="feedback" class="materialize-textarea"></textarea>
+                    <label for="email">Feedback</label>
+                    <span id="error-span" class="helper-text red-text"></span>
+                  </div>
+                  <button class="btn waves-effect waves-light deep-purple" id="send-feedback">Send<i class="material-icons right">send</i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <footer class="page-footer white grey-text lighten-2">
+          <div class="container">
+            <img src="img/javascript.png" class="right" height="120px" alt="Handled with javascript">
+            <img src="img/firebase.png" class="right" height="120px" alt="Powered by firebase">
+          </div>
+        </footer>
+
+        <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="suggestions.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  </body>
+</html>
