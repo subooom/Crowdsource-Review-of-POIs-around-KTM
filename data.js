@@ -1,9 +1,8 @@
 (function(){
   var database;
   var errors = [];
+  var clicks = 0;
   var title, img;
-  var index = 0;
-  var generate = true;
   var loadingTemplate = '<div class="preloader-wrapper big active" style="position: relative; top: 40px"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
 
   function showExitScreen(){
@@ -56,7 +55,7 @@
   }
 
   function generateItem(trips){
-
+    clicks++;
     var trip = _getRandomItem(trips);
 
     if(!trip) return showExitScreen();
@@ -76,12 +75,11 @@
       if($( window ).width() <= 600){
         $('.card').removeClass('horizontal');
       }
-      if(index>=3){
+      if(clicks>=3){
         $(".card-content").append('<a style="margin-top: 5px" id="exit" class=" waves-effect waves-light"><i class="material-icons right">exit_to_app</i>I am done, take me out</a>');
       }
       $('#skip').click(function(e){
         e.preventDefault();
-        index = Math.floor(Math.random()*30);
         $('#card-item').animate({opacity: 0}, 500);
         setTimeout(function(){
           $('#destination').html(loadingTemplate);
@@ -99,7 +97,6 @@
         var input4 = $("#tarmacked").is(':checked');
         if(review_text !== '' || input1 || input2 || input3 || input4){
           sendData();
-          index = Math.floor(Math.random()*30);
           $('#card-item').animate({opacity: 0}, 500);
           setTimeout(function(){
             $('#destination').html('<h4 id="index" class="teal-text lighten-1"></h4>'+loadingTemplate);
@@ -153,7 +150,7 @@
         $.get('https://www.thrillophilia.com/places-to-visit-in-kathmandu')
         .then(function(data){
           var html = $(data);
-          trips = html.find('.trip_detail').get().filter(function(e){ $(e).find('img').length});
+          var trips = html.find('.trip_detail').get().filter(function(e){ $(e).find('img').length});
 
           $(trips).find('.count').remove();
           index = Math.floor(Math.random()*30);
