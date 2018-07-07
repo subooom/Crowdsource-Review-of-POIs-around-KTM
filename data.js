@@ -35,7 +35,7 @@ function showExitScreen(){
   }, 550);
 }
 
-function sendData(){
+function sendData(i){
   let review_database = database.ref('reviews');
 
   let review_text = $("#review-text").val();
@@ -43,8 +43,10 @@ function sendData(){
   let input2 = $("#clean").is(':checked');
   let input3 = $("#meditate").is(':checked');
   let input4 = $("#tarmacked").is(':checked');
+  let title  = $('.header').html();
 
   let data = {
+    title: title,
     user_review: review_text,
     managed : input1,
     clean : input2,
@@ -108,8 +110,8 @@ function generateItem(trips, index){
       let input3 = $("#meditate").is(':checked');
       let input4 = $("#tarmacked").is(':checked');
       if(review_text !== '' || input1 || input2 || input3 || input4){
-        index++;
         sendData();
+        index++;
         $('#card-item').animate({opacity: 0}, 500);
         setTimeout(function(){
           $('#destination').html(`<h4 id="index" class="teal-text lighten-1">${index+1} of ${trips.length}</h4>`+loadingTemplate);
