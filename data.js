@@ -146,7 +146,6 @@ $(document).ready(function() {
   firebase.initializeApp(config);
 
   database = firebase.database();
-  (function(){
     try {
       $('#destination').html(loadingTemplate);
 
@@ -171,5 +170,4 @@ $(document).ready(function() {
     } catch (error) {
       console.warn(error);
     }
-  })();
 });
