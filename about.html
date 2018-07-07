@@ -26,7 +26,7 @@
         <div class="navbar-fixed">
           <nav class="deep-purple darken-1">
             <div class="nav-wrapper">
-              <a href="index.html" style="font-size: 1.4rem;left: 20px;" class="left brand-logo">Review of <abbr title="Points of Interests">POIs</abbr> around Kathmadu</a>
+              <a href="index.html" style="font-size: 1rem;left: 20px;" class="left brand-logo">Review of <abbr title="Points of Interests">POIs</abbr> around Kathmadu</a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="index.html">Rate</a></li>
                 <li><a href="objective.html">Objective</a></li>
@@ -35,12 +35,24 @@
             </div>
           </nav>
         </div>
+        <ul id="slide-out" class="sidenav">
+          <li><div class="user-view">
+            <div class="background">
+              <img src="img/office.jpg">
+            </div>
+            <a style="margin-bottom: 20px" href="index.html"><span class="white-text name">Review of Points of Interests around Kathmandu</span></a>
+          </div></li>
+          <li><a class="waves-effect waves-light"  href="index.html"><i class="material-icons">rate_review</i>Rate</a></li>
+          <li><a class="waves-effect waves-light"  href="objective.html"><i class="material-icons">chevron_right</i>Objective</a></li>
+          <li class="active"><a class="waves-effect waves-light" href="about.html"><i class="material-icons">person_outline</i>Who I Am?</a></li>
+        </ul>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i style="font-size: 3em;" class="material-icons deep-purple-text">menu</i></a>
         <main class="container">
           <div class="row">
             <div class="col s12 m12">
               <h2 class="header">The name's Subham Kharel</h2>
               <div class="card hoverable">
-                <div class="card-content">
+                <div class="card-content" style="margin-bottom: 20px">
                   <p style="margin-bottom: 10px;">I am a programming enthusiast who is currently studying BSc. Hons in Computing in The British College.</p>
                   <p style="margin-bottom: 10px;">Currently able to build systems on PHP, procedural, object oriented and MVC frameworks like Laravel; I am also working with Javascript frameworks such as Jquery, Axios, P5.js, Vue.js, etc. A freelancer and a student; I am here to do my part in making the world a better place.</p>
                   <p style="margin-bottom: 10px">This site was built with Materialize CSS.</p>
@@ -61,5 +73,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="cv.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+
+        <script>
+          $(document).ready(function(){
+            $('.sidenav').sidenav();
+          });
+        </script>
   </body>
 </html>
