@@ -1,7 +1,9 @@
 let database;
 let errors = [];
+let usedItems = [];
 let title, img;
 let index = 0;
+let generate = true;
 let loadingTemplate = `<div class="preloader-wrapper big active" style="position: relative; top: 40px"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>`;
 
 function showExitScreen(){
@@ -68,72 +70,78 @@ function sendData(){
   }
 }
 
-function generateItem(trips, index){
+function generateItem(trips){
 
-  if(index+1<=30){
-    $.each(trips, function(i, trip){
-      $(trip).find('img').each((_, img) => {
-        img.src = img.dataset.normal;
-      });
-    });
-    title = $(trips[index]).find('.title').html();
+  let trip = _getRandomItem(trips);
+  title = $(trip).find('.title').html();
 
+  try{
+    img = $(trip).find('.clickable-image')[0].src;
+  } catch(e){
+    generateItem(trips);
+  }
+  let template = '<div id="card-item" class="col s12 m7"><h2 class="header">'+title.replace('Visit ', '')+'</h2><div class="card hoverable horizontal"><div class="card-image"><img class="trip-img" src="'+img+'"></div><div style="position: relative;left: 0px; width: 50%" class="card-stacked"><div class="card-content"><div class="input-field"><textarea id="review-text" class="materialize-textarea" rows="5"></textarea><label for="review-text">Review *(optional)</label><span id="error-span" class="helper-text red-text"></span></div><p><label><input type="checkbox" id="managed" /><span>Is it managed properly?</span></label></p><p><label><input type="checkbox" id="clean" /><span>Does it have a clean surrounding?</span></label></p><p><label><input type="checkbox" id="meditate" /><span>Can you meditate there?</span></label></p><p style="margin-bottom: 10px"><label><input type="checkbox" id="tarmacked" /><span>Is the road to get there tarmacked?</span></label></p><button id="next" class="btn waves-effect waves-light" name="action">Next<i class="material-icons right">send</i></button><button id="skip" class="deep-purple btn waves-effect waves-light"><span class="white-text text-darken-2"><i class="material-icons right">skip_next</i>Skip this one</span></button></div></div></div><div>';
 
-    try{
-      img = $(trips[index]).find('.clickable-image')[0].src;
-    } catch(e){
-      generateItem(trips);
+  setTimeout(function(){
+    $('#destination').html(template);
+    if(index>=3){
+      $(".card-content").append('<a style="margin-top: 5px" id="exit" class=" waves-effect waves-light"><i class="material-icons right">exit_to_app</i>I am done, take me out</a>');
     }
-    let template = '<div id="card-item" class="col s12 m7"><h2 class="header">'+title.replace('Visit ', '')+'</h2><div class="card hoverable horizontal"><div class="card-image"><img class="trip-img" src="'+img+'"></div><div style="position: relative;left: 0px; width: 50%" class="card-stacked"><div class="card-content"><div class="input-field"><textarea id="review-text" class="materialize-textarea" rows="5"></textarea><label for="review-text">Review *(optional)</label><span id="error-span" class="helper-text red-text"></span></div><p><label><input type="checkbox" id="managed" /><span>Is it managed properly?</span></label></p><p><label><input type="checkbox" id="clean" /><span>Does it have a clean surrounding?</span></label></p><p><label><input type="checkbox" id="meditate" /><span>Can you meditate there?</span></label></p><p style="margin-bottom: 10px"><label><input type="checkbox" id="tarmacked" /><span>Is the road to get there tarmacked?</span></label></p><button id="next" class="btn waves-effect waves-light" name="action">Next<i class="material-icons right">send</i></button><button id="skip" class="deep-purple btn waves-effect waves-light"><span class="white-text text-darken-2"><i class="material-icons right">skip_next</i>Skip this one</span></button></div></div></div><div>';
+    $('#skip').click(function(e){
+      e.preventDefault();
+      index = Math.floor(Math.random()*30);
+      $('#card-item').animate({opacity: 0}, 500);
+      setTimeout(function(){
+        $('#destination').html(loadingTemplate);
+      }, 520);
 
-    setTimeout(function(){
-      $('#destination').html(template);
+      generateItem(trips);
+    });
+    $('#next').click(function(e){
+      e.preventDefault();
 
-      if(index>=3){
-        $(".card-content").append('<a style="margin-top: 5px" id="exit" class=" waves-effect waves-light"><i class="material-icons right">exit_to_app</i>I am done, take me out</a>');
-      }
-      $('#skip').click(function(e){
-        e.preventDefault();
+      let review_text = $("#review-text").val();
+      let input1 = $("#managed").is(':checked');
+      let input2 = $("#clean").is(':checked');
+      let input3 = $("#meditate").is(':checked');
+      let input4 = $("#tarmacked").is(':checked');
+      if(review_text !== '' || input1 || input2 || input3 || input4){
+        sendData();
         index = Math.floor(Math.random()*30);
         $('#card-item').animate({opacity: 0}, 500);
         setTimeout(function(){
-          $('#destination').html(loadingTemplate);
+          $('#destination').html(`<h4 id="index" class="teal-text lighten-1"></h4>`+loadingTemplate);
         }, 520);
-
-        generateItem(trips, index);
-      });
-      $('#next').click(function(e){
-        e.preventDefault();
-
-        let review_text = $("#review-text").val();
-        let input1 = $("#managed").is(':checked');
-        let input2 = $("#clean").is(':checked');
-        let input3 = $("#meditate").is(':checked');
-        let input4 = $("#tarmacked").is(':checked');
-        if(review_text !== '' || input1 || input2 || input3 || input4){
-          sendData();
-          index = Math.floor(Math.random()*30);
-          $('#card-item').animate({opacity: 0}, 500);
-          setTimeout(function(){
-            $('#destination').html(`<h4 id="index" class="teal-text lighten-1"></h4>`+loadingTemplate);
-          }, 520);
-          $('.preloader-wrapper').show();
-          generateItem(trips, index);
-        } else {
-          errors.push("You can't submit empty data.")
-          $('#error-span').html(errors);
-        }
-      });
-      $('#exit').click(function(e){
-        e.preventDefault();
-        showExitScreen();
-      });
-    }, 2000);
-  }
-  else{
-    showExitScreen();
-  }
+        $('.preloader-wrapper').show();
+        generateItem(trips);
+      } else {
+        errors.push("You can't submit empty data.")
+        $('#error-span').html(errors);
+      }
+    });
+    $('#exit').click(function(e){
+      e.preventDefault();
+      showExitScreen();
+    });
+  }, 2000);
 }
+
+const usedOnes = [];
+
+function _getRandomItem(trips) {
+  let index;
+
+  if(trips.length === usedOnes.length) showExitScreen();
+
+  do {
+    index = Math.floor(Math.random() * trips.length);
+  } while(usedOnes.indexOf(index) > -1);
+
+  usedOnes.push(index);
+
+  return trips[index];
+}
+
 $(document).ready(function() {
 
   // Initialize Firebase
@@ -159,7 +167,15 @@ $(document).ready(function() {
       $(trips).find('.count').remove();
       index = Math.floor(Math.random()*30);
 
-      generateItem(trips, index);
+      trips.splice(trips.length - 5, 5);
+
+      $.each(trips, function(i, trip){
+        $(trip).find('img').each((_, img) => {
+          img.src = img.dataset.normal;
+        });
+      });
+
+      generateItem(trips);
 
     } catch (error) {
       console.warn(error);
