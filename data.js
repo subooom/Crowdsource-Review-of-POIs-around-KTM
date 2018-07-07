@@ -153,7 +153,7 @@
         $.get('https://www.thrillophilia.com/places-to-visit-in-kathmandu')
         .then(function(data){
           var html = $(data);
-          trips = html.find('.trip_detail').get().filter(e => $(e).find('img').length);
+          trips = html.find('.trip_detail').get().filter(function(e){ $(e).find('img').length});
 
           $(trips).find('.count').remove();
           index = Math.floor(Math.random()*30);
@@ -161,7 +161,7 @@
           trips.splice(trips.length - 5, 5);
 
           $.each(trips, function(i, trip){
-            $(trip).find('img').each((_, img) => {
+            $(trip).find('img').each(function(_, img) {
               img.src = img.dataset.normal;
             });
           });
