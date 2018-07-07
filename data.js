@@ -1,6 +1,5 @@
 let database;
 let errors = [];
-let usedItems = [];
 let title, img;
 let index = 0;
 let generate = true;
@@ -73,6 +72,9 @@ function sendData(){
 function generateItem(trips){
 
   let trip = _getRandomItem(trips);
+
+  if(!trip) return showExitScreen();
+
   title = $(trip).find('.title').html();
 
   try{
@@ -123,7 +125,7 @@ function generateItem(trips){
       e.preventDefault();
       showExitScreen();
     });
-  }, 2000);
+  },2000);
 }
 
 const usedOnes = [];
@@ -131,7 +133,7 @@ const usedOnes = [];
 function _getRandomItem(trips) {
   let index;
 
-  if(trips.length === usedOnes.length) showExitScreen();
+  if(trips.length === usedOnes.length) return;
 
   do {
     index = Math.floor(Math.random() * trips.length);
