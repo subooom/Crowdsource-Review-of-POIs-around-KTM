@@ -67,7 +67,7 @@
     } catch(e){
       generateItem(trips);
     }
-    var template = '<div id="card-item" class="col s12 m7"><h2 class="header">'+title.replace('Visit ', '')+'</h2><div class="card hoverable horizontal"><div class="card-image"><img class="trip-img" src="'+img+'"></div><div style="position: relative;left: 0px;" class="card-stacked"><div class="card-content"><div class="input-field"><textarea id="review-text" class="materialize-textarea" rows="5"></textarea><label for="review-text">Review *(optional)</label><span id="error-span" class="helper-text red-text"></span></div><p><label><input type="checkbox" id="managed" /><span>Is it managed properly?</span></label></p><p><label><input type="checkbox" id="clean" /><span>Does it have a clean surrounding?</span></label></p><p><label><input type="checkbox" id="meditate" /><span>Can you meditate there?</span></label></p><p style="margin-bottom: 10px"><label><input type="checkbox" id="tarmacked" /><span>Is the road to get there tarmacked?</span></label></p><button id="next" class="btn waves-effect waves-light" name="action">Next<i class="material-icons right">send</i></button><button id="skip" class="deep-purple btn waves-effect waves-light"><span class="white-text text-darken-2"><i class="material-icons right">skip_next</i>Skip this one</span></button></div></div></div><div>';
+    var template = '<div id="card-item" class="col s12 m7"><h2 class="header">'+title.replace('Visit ', '')+'</h2><div class="card hoverable horizontal"><div class="card-image"><img class="trip-img" src="'+img+'"></div><div style="position: relative;left: 0px;" class="card-stacked"><div class="card-content"><div class="input-field"><textarea id="review-text" class="materialize-textarea" rows="5"></textarea><label for="review-text">Review *(optional)</label><span id="error-span" class="helper-text red-text"></span></div><p><label><input type="checkbox" id="managed" /><span>Is it managed properly?</span></label></p><p><label><input type="checkbox" id="clean" /><span>Does it have a clean surrounding?</span></label></p><p><label><input type="checkbox" id="meditate" /><span>Can you meditate there?</span></label></p><p style="margin-bottom: 10px"><label><input type="checkbox" id="tarmacked" /><span>Is the road to get there tarmacked?</span></label></p><button id="next" class="btn waves-effect waves-light" name="action">Next<i class="material-icons right">send</i></button><button id="skip" class="deep-purple btn waves-effect waves-light"><span class="white-text text-darken-2"><i class="material-icons right">skip_next</i>I have not been here yet</span></button></div></div></div><div>';
 
     setTimeout(function(){
       $('#destination').html(template);
@@ -131,8 +131,16 @@
 
     return trips[index];
   }
-
+  function showMobileScreen() {
+    var msgTemplate = '<div class="col s12 m7"><div class="card"><div class="card-image"><img src="img/oops.jpg"></div><div class="card-stacked"><div class="card-content"><h4 class="red-text">Mobile Device Detected!</h4><p>Thank you for taking the time to type this unweildy url, but sadly, due to some Javascript thingy; this survey is not doable on cellular browsers. Can you please come back again from your laptop?</p><p>I tried to make it work on cellphones but it turned out to be too much of a hassle. I hope you come back. Your data is valuable to me and to the community. Meanwhile, you might wanna check out the objectives, quote unquote; of this project by clicking <a href="objective.html">here</a> or simply swiping right and navigate from there. Thank you once again.</p></div></div></div></div>';
+    $('#destination').html(msgTemplate);
+    console.log('cellphone detected');
+  }
   $(document).ready(function() {
+    if($( window ).width() <= 600){
+      showMobileScreen();
+      return;
+    }
     // Initialize Firebase
     var config = {
       apiKey: "AIzaSyBMiFlDe29ao7r8Gj9HnC6oznOrb9ZG7lM",
